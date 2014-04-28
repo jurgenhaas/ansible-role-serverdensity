@@ -1,0 +1,48 @@
+---
+# file: roles/serverdensity/tasks/main.yml
+
+- name: 'ServerDensity | Init SD plugin'
+  local_action:
+    serverdensity
+    api_token={{sd_api_token}}
+    cleanup=true
+    cache='{{sd_api_cache_file}}'
+
+- name: 'ServerDensity | Install Public Repo Key'
+  apt_key:
+    url='https://www.serverdensity.com/downloads/boxedice-public.key'
+    state=present
+
+- name: 'ServerDensity | Add ServerDensity Repository To Apt'
+  copy:
+    content='deb http://www.serverdensity.com/downloads/linux/deb all main'
+    dest='/etc/apt/sources.list.d/sd-agent.list'
+
+- name: 'ServerDensity | Install The Agent'
+  apt:
+    pkg=sd-agent
+    state=installed
+    update_cache=yes
+  notify: 'ServerDensity | Restart Agent'
+
+- name: 'ServerDensity | Create Plugins Directory'
+  file:
+    dest='/usr/bin/sd-agent/plugins'
+    state=directory
+    mode=755
+
+- name: 'ServerDensity | Copy Plugins'
+  copy:
+    src={{inventory_dir}}/files/sd-plugins/{{item.1}}
+    dest=/usr/bin/sd-agent/plugins/{{item.1}}
+  with_items: sd_plugins|dictsort
+  notify: 'ServerDensity | Restart Agent'
+
+- name: 'ServerDensity | Configure The Agent'
+  template: src=config.cfg
+            dest=/etc/sd-agent/config.cfg
+            owner=root
+            group=root
+            mode=0644
+  when: sd_agent_key != ''
+  notify: 'ServerDensity | Restart Agent'

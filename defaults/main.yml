@@ -1,0 +1,13 @@
+---
+# file: roles/serverdensity/defaults/main.yml
+
+sd_url: false
+sd_api_token: ''
+sd_api_cache_file: '/tmp/sd_cache'
+sd_agent_key: ''
+sd_logging_level: 'info'
+sd_plugins: []
+sd_groups:
+  apache: 'all'
+  mysql: 'all'
+  proxy: 'all'
