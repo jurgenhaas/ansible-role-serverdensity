@@ -18,6 +18,7 @@
   copy:
     content='deb http://www.serverdensity.com/downloads/linux/deb all main'
     dest='/etc/apt/sources.list.d/sd-agent.list'
+    mode=644
 
 - name: 'ServerDensity | Install The Agent'
   apt:
