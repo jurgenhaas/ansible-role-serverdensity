@@ -7,7 +7,7 @@
     api_token={{sd_api_token}}
     cleanup=true
     force=true
-    cache='{{sd_api_cache_file}}'
+    cache={{sd_api_cache_file}}
 
 - name: 'ServerDensity | Install Public Repo Key'
   apt_key:
