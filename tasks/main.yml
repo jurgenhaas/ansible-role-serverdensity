@@ -11,7 +11,7 @@
 
 - name: 'ServerDensity | Install Public Repo Key'
   apt_key:
-    url='https://www.serverdensity.com/downloads/boxedice-public.key'
+    url="{{ sd_repo_public_key_uri }}"
     state=present
 
 - name: 'ServerDensity | Add ServerDensity Repository To Apt'
@@ -29,19 +29,20 @@
 
 - name: 'ServerDensity | Create Plugins Directory'
   file:
-    dest='/usr/bin/sd-agent/plugins'
+    dest="{{ sd_agent_plugins_dir }}"
     state=directory
     mode=755
 
 - name: 'ServerDensity | Copy Plugins'
   copy:
-    src={{inventory_dir}}/files/sd-plugins/{{item.1}}
-    dest=/usr/bin/sd-agent/plugins/{{item.1}}
+    src="{{ sd_plugins_files_dir }}/{{item.1}}"
+    dest="{{ sd_agent_plugins_dir }}/{{item.1}}"
   with_items: sd_plugins|dictsort
+  when: sd_plugins|length > 0
   notify: 'ServerDensity | Restart Agent'
 
 - name: 'ServerDensity | Configure The Agent'
-  template: src=config.cfg
+  template: src="{{ sd_template_config }}"
             dest=/etc/sd-agent/config.cfg
             owner=root
             group=root
