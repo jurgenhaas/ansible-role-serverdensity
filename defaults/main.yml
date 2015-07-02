@@ -11,3 +11,10 @@ sd_groups:
   apache: 'none'
   mysql: 'none'
   proxy: 'none'
+
+
+sd_repo_public_key_uri: 'https://www.serverdensity.com/downloads/boxedice-public.key'
+sd_agent_plugins_dir: '/usr/bin/sd-agent/plugins'
+sd_plugins_files_dir: "{{inventory_dir}}/files/sd-plugins"
+sd_template_config: 'config.cfg'
+...
