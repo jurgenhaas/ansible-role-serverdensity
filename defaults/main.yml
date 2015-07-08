@@ -6,6 +6,8 @@ sd_api_token: ''
 sd_api_cache_file: false
 sd_agent_key: ''
 sd_logging_level: 'info'
+sd_alert_cleanup: true
+sd_force_update: true
 sd_plugins: []
 sd_groups:
   apache: 'none'
