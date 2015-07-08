@@ -5,8 +5,8 @@
   local_action:
     serverdensity
     api_token={{sd_api_token}}
-    cleanup=true
-    force=true
+    cleanup={{sd_alert_cleanup}}
+    force={{ sd_force_update }}
     cache={{sd_api_cache_file}}
 
 - name: 'ServerDensity | Install Public Repo Key'
