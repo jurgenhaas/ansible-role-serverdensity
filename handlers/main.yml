@@ -1,5 +1,0 @@
----
-# file: roles/serverdensity/handlers/main.yml
-
-- name: 'ServerDensity | Restart Agent'
-  service: name=sd-agent state=restarted
